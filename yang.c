@@ -10,7 +10,7 @@ struct yangst {
 	int  parttime[2][10];//{{1956， 1957， 1958},{1963， 1964}， };
 };
 
-static void print_yang(struct yangst yznlife)
+static void print_yang(struct yangst yznlife, int (*ppt)[10])
 {
 	int bylen = sizeof(yznlife.big_year)/sizeof(yznlife.big_year[0]);
 	int pnlen = sizeof(yznlife.partners)/sizeof(yznlife.partners[0]);
@@ -35,15 +35,11 @@ static void print_yang(struct yangst yznlife)
 	/*print parttime, 使用行指针会将结果处理的很漂亮*/
 	int ptrow = sizeof(yznlife.parttime)/sizeof(yznlife.parttime[0]);
 	int ptcol = sizeof(yznlife.parttime[0]);
-	typedef int (*pparttime)[ptcol];
-	pparttime ppt = yznlife.parttime;
-
-	int j = 0;
+//	typedef int (*pparttime)[ptcol];
+	int j;
 	for (i = 0; i < ptrow; i++) {
-		printf("i = %d\n", i);
-		for (; j < ptcol; j++) {
+		for (j = 0; j < ptcol; j++) {
 			if ( *(*(ppt + i) + j) == -0xff ) {
-				printf("---\n");
 				break;
 			}
 			printf("%d, ", *(*(ppt + i) + j));
@@ -67,7 +63,9 @@ int main()
 			.parttime = {{1956, 1957, 1958, -0xff}, {1963, 1964, -0xff}},
 		};
 
-		print_yang(yznlife);
+		typedef int (*pptime)[10];
+		pptime ppt = yznlife.parttime;
+		print_yang(yznlife, ppt);
 	}
 
 	return 0;
