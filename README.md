@@ -1,7 +1,19 @@
 # howto-use-struct
 如何随意而优雅的使用结构体struct
 
+-------------------------------------------------------------------------------------------
+参考
+0.0 从整体上讲，结构体初始化和赋值
+http://blog.csdn.net/dengziliang001/article/details/8720808
+http://codewenda.com/c%e8%af%ad%e8%a8%80%e7%bb%93%e6%9e%84%e4%bd%93%e7%9b%b4%e6%8e%a5%e8%b5%8b%e5%80%bc/
 
+1.对于结构体变量赋值的误区
+http://blog.csdn.net/tietao/article/details/7257835
+
+2.零长数组相关
+http://blog.csdn.net/yang_yulei/article/details/23395315
+
+---------------------------------------------------------------------------------------------
 1.简单结构体（初始化一个包含char, int, char \*, char [x], int[][], char \*[], \）的不同场景的使用，如使用指针，如取得内部数据，如通过内部获取整体container of; 结构体内存的copy；
 
 2.特殊结构体处理, union, attribute\_packed, char [0] ;
