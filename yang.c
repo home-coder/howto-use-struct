@@ -122,29 +122,45 @@ static void print_yang_point(struct yangst *pyzn)
 
 	printf("\n-------------------------------------\n");
 }
-
+#define debug() printf("%s %d\n", __func__, __LINE__)
 static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 {
 	char *yznpter = *(pyzn->partners);
+//	char *yznpter = pyzn->partners[0];
+	printf("%s\n", yznpter);
 	bool flag = false;
 
 	for (; yznpter != NULL; yznpter++) {
 		if ( !strncmp(pter, yznpter, strlen(pter)) ) {
-			flag = true;
-			break;
-		}
-		if (flag) {
 			int ptrow = sizeof(pyzn->parttime)/sizeof(pyzn->parttime[0]);
 			int ptcol = sizeof(pyzn->parttime[0]);
 			int i = 0, j = 0;
 			for (i = 0; i < ptrow; i++) {
 				for (j = 0; j < ptcol; j++) {
-					if (pyzn->parttime[i][j] == ptime[j]) {
+					debug();
+					if (pyzn->parttime[i][j] == -0xff || ptime[j] == -0xff) {
+						debug();
+						break;
+					}
+					if (pyzn->parttime[i][j] != ptime[j]) {
+						debug();
+						break;
 					}
 				}
+				if (j == ptcol) {
+					printf("debug: have find parttime\n");
+					/*query big year*/
+					int *pby = pyzn->big_year;
+					for (; *pby != -0xff; pby++) {
+						for (j = 0; j < ptcol; j++) {
+							if (*pby == ptime[j]) {
+								printf("have find big year is %d with %s \n", *pby, pter);
+							}
+						}
+					}
+					break;
+				}
 			}
-		} else {
-			return -1;
 		}
 	}
 }
