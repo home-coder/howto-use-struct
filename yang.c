@@ -12,6 +12,8 @@ struct yangst {
 	int  parttime[2][10];//{{1956， 1957， 1958},{1963， 1964}， };
 };
 
+typedef enum {false = 0, true}bool;
+
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
 {
 	int bylen = sizeof(yznlife.big_year)/sizeof(yznlife.big_year[0]);
@@ -121,8 +123,30 @@ static void print_yang_point(struct yangst *pyzn)
 	printf("\n-------------------------------------\n");
 }
 
-static int query_big_year(struct yangst *pyzn, char *pter, int *ptime)
+static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 {
+	char *yznpter = *(pyzn->partners);
+	bool flag = false;
+
+	for (; yznpter != NULL; yznpter++) {
+		if ( !strncmp(pter, yznpter, strlen(pter)) ) {
+			flag = true;
+			break;
+		}
+		if (flag) {
+			int ptrow = sizeof(pyzn->parttime)/sizeof(pyzn->parttime[0]);
+			int ptcol = sizeof(pyzn->parttime[0]);
+			int i = 0, j = 0;
+			for (i = 0; i < ptrow; i++) {
+				for (j = 0; j < ptcol; j++) {
+					if (pyzn->parttime[i][j] == ptime[j]) {
+					}
+				}
+			}
+		} else {
+			return -1;
+		}
+	}
 }
 
 int main()
@@ -189,8 +213,9 @@ int main()
 
 		/*query big year*/
 		struct yangst *pyzn = &yznlife;
+		int plen = sizeof(ptime)/sizeof(ptime[0]);
 		int ret = 0;
-		ret = query_big_year(pyzn, pter, ptime);
+		ret = query_big_year(pyzn, pter, ptime, plen);
 		if (ret < 0) {
 			fprintf(stderr, "not find\n");
 			exit(-1);
