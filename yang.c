@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct yangst {
 	char *name;
@@ -119,6 +121,10 @@ static void print_yang_point(struct yangst *pyzn)
 	printf("\n-------------------------------------\n");
 }
 
+static int query_big_year(struct yangst *pyzn, char *pter, int *ptime)
+{
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -166,6 +172,29 @@ int main()
 
 		struct yangst *pyzn = &yznlife;
 		print_yang_point(pyzn);
+	}
+//3.0 编写实现：如果Mils and yang parttime is {1956, 1957, 1958}, 请分析这个合作阶段有没有重大的发现，就是big_year !
+	{
+		struct yangst yznlife = {
+			.name = "Yangzhenning",
+			.no   = 'A',
+			.age  = 95,
+			.wife = "Duzhili",
+			.big_year = {1942, 1954, 1966, 1971, 2003, -0xff},
+			.partners = {"Mils", "Lizhengdao", "Wengfan", NULL},
+			.parttime = {{1956, 1957, 1958, -0xff}, {1963, 1964, -0xff}},
+		};
+		char *pter = "Mils";
+		int  ptime[] = {1956, 1957, 1958};
+
+		/*query big year*/
+		struct yangst *pyzn = &yznlife;
+		int ret = 0;
+		ret = query_big_year(pyzn, pter, ptime);
+		if (ret < 0) {
+			fprintf(stderr, "not find\n");
+			exit(-1);
+		}
 	}
 
 	return 0;
