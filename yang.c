@@ -87,6 +87,38 @@ static void print_yang2(struct yangst yznlife)
 	printf("\n-------------------------------------\n");
 }
 
+static void print_yang_point(struct yangst *pyzn)
+{
+	printf("name = %s\n", pyzn->name);
+	printf("no   = %c\n", pyzn->no);
+	printf("age  = %d\n", pyzn->age);
+	printf("wife = %s\n", pyzn->wife);
+	printf("big_year = ");
+
+	/*print big year*/
+	int bylen = sizeof(pyzn->big_year)/sizeof(pyzn->big_year[0]);
+	int *pby = pyzn->big_year;
+	for (; (pby < pyzn->big_year+bylen) && (*pby != -0xff); pby++) {
+		printf("%d,", *pby);
+	}
+	printf("\n");
+
+	/*print partner time*/
+	int ptrow = sizeof(pyzn->parttime)/sizeof(pyzn->parttime[0]);
+	int ptcol = sizeof(pyzn->parttime[0]);
+	int i = 0, j = 0;
+	for (; i < ptrow; i++) {
+		for (j = 0; j < ptcol; j++) {
+			if ( pyzn->parttime[i][j] == -0xff ) {
+				break;
+			}
+			printf("%d, ", pyzn->parttime[i][j]);
+		}
+	}
+
+	printf("\n-------------------------------------\n");
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -118,6 +150,22 @@ int main()
 		};
 
 		print_yang2(yznlife);
+	}
+
+//2.0 结构体名当做参数，并不会想指针一样传递指针，而是将整个结构体赋值一份给参数列表(这就包含了里面的数组成员等等都需要copy一份), 所以使用结构体指针会起到优化的作用。
+	{
+		struct yangst yznlife = {
+			.name = "Yangzhenning",
+			.no   = 'A',
+			.age  = 95,
+			.wife = "Duzhili",
+			.big_year = {1942, 1954, 1966, 1971, 2003, -0xff},
+			.partners = {"Mils", "Lizhengdao", "Wengfan", NULL},
+			.parttime = {{1956, 1957, 1958, -0xff}, {1963, 1964, -0xff}},
+		};
+
+		struct yangst *pyzn = &yznlife;
+		print_yang_point(pyzn);
 	}
 
 	return 0;
