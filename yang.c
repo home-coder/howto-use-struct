@@ -125,44 +125,51 @@ static void print_yang_point(struct yangst *pyzn)
 #define debug() printf("%s %d\n", __func__, __LINE__)
 static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 {
-	char *yznpter = *(pyzn->partners);
+	char **yznpter = pyzn->partners;
 //	char *yznpter = pyzn->partners[0];
-	printf("%s\n", yznpter);
 	bool flag = false;
 
-	for (; yznpter != NULL; yznpter++) {
-		if ( !strncmp(pter, yznpter, strlen(pter)) ) {
-			int ptrow = sizeof(pyzn->parttime)/sizeof(pyzn->parttime[0]);
-			int ptcol = sizeof(pyzn->parttime[0]);
+	/*
+	*将dst数组所有元素与src中的每一行数据比较，如果匹配到最后，dst数组的个数到头了，并且src的下一个元素是-0xff 同时j == plen被查询数组到头了
+	*那么完成查询动作
+	*
+	*/
+	int ptrow = sizeof(pyzn->parttime)/sizeof(pyzn->parttime[0]);
+	int ptcol = sizeof(pyzn->parttime[0]);
+	if ( ptcol-1 < plen) {
+		printf("src列数组长度太小了，退出查询\n");
+		return -1;
+	}
+
+	for (; *yznpter != NULL; yznpter++) {
+		if ( !strncmp(pter, *yznpter, strlen(pter)) ) {
 			int i = 0, j = 0;
 			for (i = 0; i < ptrow; i++) {
-				for (j = 0; j < ptcol; j++) {
-					debug();
+				for (j = 0; j < plen; j++) {
 					if (pyzn->parttime[i][j] == -0xff || ptime[j] == -0xff) {
-						debug();
 						break;
 					}
 					if (pyzn->parttime[i][j] != ptime[j]) {
-						debug();
 						break;
 					}
 				}
-				if (j == ptcol) {
-					printf("debug: have find parttime\n");
+				if ( (j == plen) && (pyzn->parttime[i][j] == -0xff) ) {
 					/*query big year*/
 					int *pby = pyzn->big_year;
 					for (; *pby != -0xff; pby++) {
-						for (j = 0; j < ptcol; j++) {
+						for (j = 0; j < plen; j++) {
 							if (*pby == ptime[j]) {
 								printf("have find big year is %d with %s \n", *pby, pter);
+								flag = true;
 							}
 						}
 					}
-					break;
 				}
 			}
 		}
 	}
+
+	return flag;
 }
 
 int main()
@@ -220,8 +227,8 @@ int main()
 			.no   = 'A',
 			.age  = 95,
 			.wife = "Duzhili",
-			.big_year = {1942, 1954, 1966, 1971, 2003, -0xff},
-			.partners = {"Mils", "Lizhengdao", "Wengfan", NULL},
+			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, -0xff},
+			.partners = {"Feiman", "Mils", "Lizhengdao", "Wengfan", NULL},
 			.parttime = {{1956, 1957, 1958, -0xff}, {1963, 1964, -0xff}},
 		};
 		char *pter = "Mils";
@@ -231,8 +238,9 @@ int main()
 		struct yangst *pyzn = &yznlife;
 		int plen = sizeof(ptime)/sizeof(ptime[0]);
 		int ret = 0;
+		/* 0:false, 1:true*/
 		ret = query_big_year(pyzn, pter, ptime, plen);
-		if (ret < 0) {
+		if (ret < 1) {
 			fprintf(stderr, "not find\n");
 			exit(-1);
 		}
