@@ -12,6 +12,20 @@ struct yangst {
 	int  parttime[2][10];//{{1956， 1957， 1958},{1963， 1964}， };
 };
 
+#define	MARRIAGE     3  //最多3段婚姻
+#define REGION		 2  //时间跨度范围
+struct his_wife {
+	char *name;
+	int love_years[REGION];
+	int year;
+	int wife_big[20];
+};
+
+struct physicalst {
+	struct his_wife wife[MARRIAGE];
+	int big_year[20];
+};
+
 typedef enum {false = 0, true}bool;
 
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
@@ -172,6 +186,28 @@ static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 	return flag;
 }
 
+static void query_who_every_bigyear(struct physicalst yznlife)
+{
+	int i = 0, j = 0, m = 0;
+
+	for (i = 0; yznlife.big_year[i] != -0xff; i++) {
+		for (j = 0; j < MARRIAGE; j++) {
+			if (yznlife.big_year[i] < yznlife.wife[j].love_years[0] || yznlife.big_year[i] > yznlife.wife[j].love_years[1]) {
+				break;
+			}
+			yznlife.wife[j].wife_big[yznlife.wife[j].year++] = yznlife.big_year[i];
+		}
+	}
+
+	for (j = 0; j < MARRIAGE; j++) {
+		printf("with wife %s, big year is ", yznlife.wife[j].name);
+		for (i = 0; i < yznlife.wife[j].year - 1; i++) {
+			printf("%d, ", yznlife.wife[j].wife_big[i]);
+		}
+		printf("\n");
+	}
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -248,30 +284,22 @@ int main()
 
 //4.0 编程实现：查询yangzhenning的大事年big year是发生在和谁的婚姻过程中。
 	{
-#define	MARRIAGE     3  //最多3段婚姻
-#define REGION		 2  //时间跨度范围
-		struct his_wife {
-			char *name;
-			int love_years[REGION];
-		};
-
-		struct physicalst {
-			struct his_wife wife[MARRIAGE];
-			int big_year[20];
-		};
-
 		struct physicalst yznlife = {
 			.wife[0] = {
 				.name = "duzhili",
 				.love_years = {1956, 2003},
+				.year = 0,
 			},
 			.wife[2] = {
 				.name = "wengfan",
 				.love_years = {2003, 2017},
+				.year = 0,
 			},
 
 			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
 		};
+
+		query_who_every_bigyear(yznlife);
 	}
 
 	return 0;
