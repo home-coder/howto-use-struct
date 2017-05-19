@@ -246,5 +246,33 @@ int main()
 		}
 	}
 
+//4.0 编程实现：查询yangzhenning的大事年big year是发生在和谁的婚姻过程中。
+	{
+#define	MARRIAGE     3  //最多3段婚姻
+#define REGION		 2  //时间跨度范围
+		struct his_wife {
+			char *name;
+			int love_years[REGION];
+		};
+
+		struct physicalst physical {
+			struct his_wife wife[MARRIAGE];
+			int big_year[20];
+		};
+
+		struct physicalst yznlife = {
+			.wife[0] = {
+				.name = "duzhili",
+				.love_years[2] = {1956, 2003},
+			},
+			.wife[2] = {
+				.name = "wengfan",
+				.love_years[2] = {2003, 2017},
+			},
+
+			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
+		};
+	}
+
 	return 0;
 }
