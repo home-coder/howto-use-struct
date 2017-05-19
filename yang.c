@@ -255,7 +255,7 @@ int main()
 			int love_years[REGION];
 		};
 
-		struct physicalst physical {
+		struct physicalst {
 			struct his_wife wife[MARRIAGE];
 			int big_year[20];
 		};
@@ -263,11 +263,11 @@ int main()
 		struct physicalst yznlife = {
 			.wife[0] = {
 				.name = "duzhili",
-				.love_years[2] = {1956, 2003},
+				.love_years = {1956, 2003},
 			},
 			.wife[2] = {
 				.name = "wengfan",
-				.love_years[2] = {2003, 2017},
+				.love_years = {2003, 2017},
 			},
 
 			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
