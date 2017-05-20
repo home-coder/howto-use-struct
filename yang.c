@@ -182,6 +182,7 @@ static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 			}
 		}
 	}
+	printf("-------------------------------------\n");
 
 	return flag;
 }
@@ -192,7 +193,7 @@ static void query_who_every_bigyear(struct physicalst yznlife)
 
 	for (i = 0; yznlife.big_year[i] != -0xff; i++) {
 		for (j = 0; j < MARRIAGE; j++) {
-			if (yznlife.big_year[i] < yznlife.wife[j].love_years[0] || yznlife.big_year[i] > yznlife.wife[j].love_years[1]) {
+			if (yznlife.wife[j].name == NULL ||yznlife.big_year[i] < yznlife.wife[j].love_years[0] || yznlife.big_year[i] > yznlife.wife[j].love_years[1]) {
 				break;
 			}
 			yznlife.wife[j].wife_big[yznlife.wife[j].year++] = yznlife.big_year[i];
@@ -209,6 +210,33 @@ static void query_who_every_bigyear(struct physicalst yznlife)
 		}
 		printf("\n");
 	}
+	printf("-------------------------------------\n");
+}
+
+static void query_who_every_bigyear2(struct physicalst *yznlife)
+{
+	int i = 0, j = 0;
+
+	for (i = 0; yznlife->big_year[i] != -0xff; i++) {
+		for (j = 0; j < MARRIAGE; j++) {
+			if (yznlife->wife[j].name == NULL || yznlife->big_year[i] < yznlife->wife[j].love_years[0] || yznlife->big_year[i] > yznlife->wife[j].love_years[1]) {
+				break;
+			}
+			yznlife->wife[j].wife_big[yznlife->wife[j].year++] = yznlife->big_year[i];
+		}
+	}
+
+	for (j = 0; j < MARRIAGE; j++) {
+		if (!yznlife->wife[j].name) {
+			break;
+		}
+		printf("with wife %s, big year is ", yznlife->wife[j].name);
+		for (i = 0; i < yznlife->wife[j].year; i++) {
+			printf("%d, ", yznlife->wife[j].wife_big[i]);
+		}
+		printf("\n");
+	}
+	printf("-------------------------------------\n");
 }
 
 int main()
@@ -305,18 +333,33 @@ int main()
 		query_who_every_bigyear(yznlife);
 	}
 
-//4.1 使用指针方式重新完成4.0的功能.
+//4.1 使用另一种初始化结构体数组的方式，指针方式重新完成4.0的功能.
 	{
 		struct physicalst yznlife = {
 			.wife = {
-				.[0] = {
+				[0] = {
 					.name = "duzhili",
 					.love_years = {1956, 2003},
 					.year = 0,
 				},
+				[1] = {
+					.name = "wengfan",
+					.love_years = {2003, 2017},
+					.year = 0,
+				},
 			},
+
+			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
 		};
+
+		struct physicalst *pyzn = &yznlife;
+		query_who_every_bigyear2(pyzn);
+
 	}
+
+//4.2 不使用一次性初始化方式，首先定义一个结构体，然后逐个赋值
+
+//4.3 使用指针方式 完成4.2所说的功能.
 
 	return 0;
 }
