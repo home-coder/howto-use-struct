@@ -306,6 +306,17 @@ int main()
 	}
 
 //4.1 使用指针方式重新完成4.0的功能.
+	{
+		struct physicalst yznlife = {
+			.wife = {
+				.[0] = {
+					.name = "duzhili",
+					.love_years = {1956, 2003},
+					.year = 0,
+				},
+			},
+		};
+	}
 
 	return 0;
 }
