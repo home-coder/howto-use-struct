@@ -188,7 +188,7 @@ static int query_big_year(struct yangst *pyzn, char *pter, int *ptime, int plen)
 
 static void query_who_every_bigyear(struct physicalst yznlife)
 {
-	int i = 0, j = 0, m = 0;
+	int i = 0, j = 0;
 
 	for (i = 0; yznlife.big_year[i] != -0xff; i++) {
 		for (j = 0; j < MARRIAGE; j++) {
@@ -200,8 +200,11 @@ static void query_who_every_bigyear(struct physicalst yznlife)
 	}
 
 	for (j = 0; j < MARRIAGE; j++) {
+		if (!yznlife.wife[j].name) {
+			break;
+		}
 		printf("with wife %s, big year is ", yznlife.wife[j].name);
-		for (i = 0; i < yznlife.wife[j].year - 1; i++) {
+		for (i = 0; i < yznlife.wife[j].year; i++) {
 			printf("%d, ", yznlife.wife[j].wife_big[i]);
 		}
 		printf("\n");
@@ -290,7 +293,7 @@ int main()
 				.love_years = {1956, 2003},
 				.year = 0,
 			},
-			.wife[2] = {
+			.wife[1] = {
 				.name = "wengfan",
 				.love_years = {2003, 2017},
 				.year = 0,
@@ -301,6 +304,8 @@ int main()
 
 		query_who_every_bigyear(yznlife);
 	}
+
+//4.1 使用指针方式重新完成4.0的功能.
 
 	return 0;
 }
