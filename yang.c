@@ -363,24 +363,21 @@ int main()
 		struct physicalst yznlife = {
 			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
 		};
-		yznlife.wife[0] = {
-			.name = "duzhili",
-			.year = 0,
-		};
+		yznlife.wife[0].name = "duzhili";
+		yznlife.wife[0].year = 0;
+
 		yznlife.wife[0].love_years[0] = 1956;
 		yznlife.wife[0].love_years[1] = 2003;
 
-		yznlife.wife[1] = {
-			.name = "wengfan",
-			.year = 0,
-		};
+		yznlife.wife[1].name = "wengfan";
+		yznlife.wife[1].year = 0;
+
 		yznlife.wife[1].love_years[0] = 2003;
 		yznlife.wife[1].love_years[1] = 2017;
 
 		query_who_every_bigyear(yznlife);
 	}
-
-//4.3 使用指针方式 完成4.2所说的功能.
+//4.3 使用指针方式 完成4.2所说的功能. 当然还有一个联系的目的是，数组的赋值问题，初始化倒是好办（定义的时候直接赋予一个初始值）， 但是单纯的赋值就有讲究了，必须按照C语言的标准来，按照最小元素赋值.
 
 //5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果，
       //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
