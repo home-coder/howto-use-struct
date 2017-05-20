@@ -359,8 +359,32 @@ int main()
 	}
 
 //4.2 不使用一次性初始化方式，首先定义一个结构体，然后逐个赋值
+	{
+		struct physicalst yznlife = {
+			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
+		};
+		yznlife.wife[0] = {
+			.name = "duzhili",
+			.year = 0,
+		};
+		yznlife.wife[0].love_years[0] = 1956;
+		yznlife.wife[0].love_years[1] = 2003;
+
+		yznlife.wife[1] = {
+			.name = "wengfan",
+			.year = 0,
+		};
+		yznlife.wife[1].love_years[0] = 2003;
+		yznlife.wife[1].love_years[1] = 2017;
+
+		query_who_every_bigyear(yznlife);
+	}
 
 //4.3 使用指针方式 完成4.2所说的功能.
+
+//5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果，
+      //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
+	  //使用链表或者什么将所有物理家的共性连到一起
 
 	return 0;
 }
