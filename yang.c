@@ -26,6 +26,11 @@ struct physicalst {
 	int big_year[20];
 };
 
+struct physicalst2 {
+	struct his_wife *wife;
+	int big_year[20];
+};
+
 typedef enum {false = 0, true}bool;
 
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
@@ -239,6 +244,19 @@ static void query_who_every_bigyear2(struct physicalst *yznlife)
 	printf("-------------------------------------\n");
 }
 
+static void print_everywife_name(struct physicalst2 yznlife)
+{
+	int i = 0;
+
+	for (i = 0; i < MARRIAGE; i++) {
+		if (!(yznlife.wife + i)->name) {
+			break;
+		}
+		printf("his %d wife name is %s \n", i + 1, (yznlife.wife + i)->name);
+	}
+	printf("-------------------------------------\n");
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -376,6 +394,27 @@ int main()
 		yznlife.wife[1].love_years[1] = 2017;
 
 		query_who_every_bigyear(yznlife);
+	}
+	//4.2.1 但独将 his_wife作为一个结构体初始化，然后通过指针指向这个结构体
+	{
+		struct his_wife thiswife[MARRIAGE] = {
+			[0] = {
+				.name = "duzhili",
+				.year = 0,
+			},
+			[1] = {
+				.name = "wengfan",
+				.year = 0,
+			},
+		};
+
+		struct physicalst2 yznlife = {
+			.wife = thiswife,
+			.big_year = {1942, 1954, 1956, 1958, 1966, 1971, 2003, 2015, -0xff},
+		};
+
+		print_everywife_name(yznlife);
+//		query_who_every_bigyear3(yznlife);
 	}
 //4.3 使用指针方式 完成4.2所说的功能. 当然还有一个联系的目的是，数组的赋值问题，初始化倒是好办（定义的时候直接赋予一个初始值）， 但是单纯的赋值就有讲究了，必须按照C语言的标准来，按照最小元素赋值.
 
