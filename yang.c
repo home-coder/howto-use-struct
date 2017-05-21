@@ -31,6 +31,11 @@ struct physicalst2 {
 	int big_year[20];
 };
 
+struct physicalst3 {
+	struct his_wife **wife;
+	int big_year[20];
+};
+
 typedef enum {false = 0, true}bool;
 
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
@@ -257,6 +262,16 @@ static void print_everywife_name(struct physicalst2 yznlife)
 	printf("-------------------------------------\n");
 }
 
+static void print_everywife_name2(struct physicalst3 *yznlife)
+{
+	int i = 0;
+
+	for (; *(yznlife->wife) != NULL; yznlife->wife++) {
+		printf("his %d wife name is %s\n", i++, (*(yznlife->wife))->name); //优先级问题,箭头   -> 和 []   是一个级别的属于一等优先
+	}
+	printf("-------------------------------------\n");
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -419,6 +434,30 @@ int main()
 //4.2.2 自己总结性文章一个，  放到README.md当中，取名《结构体成员初始化的归纳》
 
 //4.3 使用指针方式 完成4.2所说的功能. 当然还有一个联系的目的是，数组的赋值问题，初始化倒是好办（定义的时候直接赋予一个初始值）， 但是单纯的赋值就有讲究了，必须按照C语言的标准来，按照最小元素赋值.
+	{
+		struct his_wife *thiswife[MARRIAGE];
+		int i;
+
+		for (i = 0; i < MARRIAGE-1; i++) {
+			thiswife[i] = (struct his_wife *)malloc(sizeof(struct his_wife));
+			if (!thiswife[i]) {
+				fprintf(stderr, "malloc error\n");
+				exit(-1);
+			}
+		}
+		thiswife[MARRIAGE-1] = NULL;
+
+		thiswife[0]->name = "duzhili";
+		thiswife[0]->year = 0;
+		thiswife[1]->name = "wengfan";
+		thiswife[1]->year = 0;
+
+		struct physicalst3 *yznlife = (struct physicalst3 *)malloc(sizeof(*yznlife));
+		/*注意所有遍历数组都是先存好第一个元素的地址，结构体也不例外, 当然也可以使用int i来遍历*/
+		yznlife->wife = thiswife;
+
+		print_everywife_name2(yznlife);
+	}
 
 //5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果，
       //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
