@@ -459,6 +459,26 @@ int main()
 		print_everywife_name2(yznlife);
 	}
 
+//4.4 使用physicalst3的二级指针, 其中的元素直接指向一个初始化好的结构体，并完成4.3的相同工作
+	{
+		struct his_wife thiswife[MARRIAGE] = {
+			[0] = {
+				.name = "duzhili",
+			},
+			[1] = {
+				.name = "wengfan",
+			},
+		};
+
+		struct physicalst3 *yznlife = (struct physicalst3 *)malloc(sizeof(*yznlife));
+		yznlife->wife = (struct his_wife **)malloc(sizeof(struct his_wife *) * MARRIAGE);
+
+		yznlife->wife[0] = &thiswife[0];
+		yznlife->wife[1] = &thiswife[1];
+
+		print_everywife_name2(yznlife);
+	}
+
 //5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果，
       //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
 	  //使用链表或者什么将所有物理家的共性连到一起
