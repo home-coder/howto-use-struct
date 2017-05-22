@@ -38,6 +38,23 @@ struct physicalst3 {
 
 typedef enum {false = 0, true}bool;
 
+struct contribution {
+	int year;
+	char *invention;
+};
+
+struct partner {
+	char *partname;
+	int parttime[3][2]; //假设最多合作过3段时间，每段区间如 {1956, 1962}
+};
+
+struct physicalst5 {
+	char *name;
+	struct contribution cbution[5]; //最多五个贡献
+	struct partner pners[3]; //最多三个合作者
+	void (*query_invention_partname)(struct physicalst5 *, char *, int *); //yangzhenning, {1956, 1962}
+};
+
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
 {
 	int bylen = sizeof(yznlife.big_year)/sizeof(yznlife.big_year[0]);
@@ -272,9 +289,8 @@ static void print_everywife_name2(struct physicalst3 *yznlife)
 	printf("-------------------------------------\n");
 }
 
-static void inner_querypp(char *name, int *region)
+static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 {
-
 }
 
 int main()
@@ -489,60 +505,44 @@ int main()
 	  //使用链表或者什么将所有物理家的共性连到一起,下一步的事情
 
 	{
-		typedef void (*query_invention_partname)(char *name, int *region); //yangzhenning, {1956, 1962}
-
-		struct contribution {
-			int year;
-			char *invention;
-		};
-
-		struct partner {
-			char *partname;
-			int parttime[3][2]; //假设最多合作过3段时间，每段区间如 {1956, 1962}
-		};
-
-		struct physicalst5 {
-			char *name;
-			struct contribution cbution[5]; //最多五个贡献
-			struct partner pners[3]; //最多三个合作者
-			query_invention_partname physicalst5_querypp;
-		};
-
-		struct physicalst5 phylife[5];
-
-		phylife[0] = {
-			.name = "yangzhenning",
-			.cbution = {
-				[0] = {
-					.year = 1952,
-					.invention = "Yang 1st NB",
+		struct physicalst5 phylife[5] = {
+			[0] = {
+				.name = "yangzhenning",
+				.cbution = {
+					[0] = {
+						.year = 1952,
+						.invention = "Yang 1st NB",
+					},
+					[1] = {
+						.year = 1954,
+						.invention = "Yang 2st NB",
+					},
+					[2] = {
+						.year = 1956,
+						.invention = "Yang 3st HenNB",
+					},
+					[3] = {
+						.year = 1962,
+						.invention = "Yang 4st Old NB",
+					},
 				},
-				[1] = {
-					.year = 1954,
-					.invention = "Yang 2st NB",
+				.pners = {
+					[0] = {
+						.partname = "Lizhengdao",
+						.parttime = {{1952, 1953}, {1955, 1958}},
+					},
+					[1] = {
+						.partname = "mils",
+						.parttime = {{1960, 1967}, {1977, 1983}},
+					},
 				},
-				[2] = {
-					.year = 1956,
-					.invention = "Yang 3st HenNB",
-				},
-				[3] = {
-					.year = 1962,
-					.invention = "Yang 4st Old NB",
-				},
+
+				.query_invention_partname = inner_querypp,
 			},
-			.pners = {
-				[0] = {
-					.partname = "Lizhengdao",
-					.parttime = {{1952, 1953}, {1955, 1958}},
-				},
-				[1] = {
-					.partname = "mils",
-					.parttime = {{1960, 1967}, {1977, 1983}},
-				},
-			},
-		};
-		phylife[0].physicalst5_querypp = inner_querypp;
 
+			[1] = NULL,
+		};
+		char *p = 0;
 	}
 //6.0 思考使用宏函数来实现上面繁琐的赋值过程
 	return 0;
