@@ -272,6 +272,11 @@ static void print_everywife_name2(struct physicalst3 *yznlife)
 	printf("-------------------------------------\n");
 }
 
+static void inner_querypp(char *name, int *region)
+{
+
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -479,9 +484,66 @@ int main()
 		print_everywife_name2(yznlife);
 	}
 
-//5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果，
+//5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果和合作者，不要考虑时间重合多个合作者，那是下一步的事情
       //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
-	  //使用链表或者什么将所有物理家的共性连到一起
+	  //使用链表或者什么将所有物理家的共性连到一起,下一步的事情
 
+	{
+		typedef void (*query_invention_partname)(char *name, int *region); //yangzhenning, {1956, 1962}
+
+		struct contribution {
+			int year;
+			char *invention;
+		};
+
+		struct partner {
+			char *partname;
+			int parttime[3][2]; //假设最多合作过3段时间，每段区间如 {1956, 1962}
+		};
+
+		struct physicalst5 {
+			char *name;
+			struct contribution cbution[5]; //最多五个贡献
+			struct partner pners[3]; //最多三个合作者
+			query_invention_partname physicalst5_querypp;
+		};
+
+		struct physicalst5 phylife[5];
+
+		phylife[0] = {
+			.name = "yangzhenning",
+			.cbution = {
+				[0] = {
+					.year = 1952,
+					.invention = "Yang 1st NB",
+				},
+				[1] = {
+					.year = 1954,
+					.invention = "Yang 2st NB",
+				},
+				[2] = {
+					.year = 1956,
+					.invention = "Yang 3st HenNB",
+				},
+				[3] = {
+					.year = 1962,
+					.invention = "Yang 4st Old NB",
+				},
+			},
+			.pners = {
+				[0] = {
+					.partname = "Lizhengdao",
+					.parttime = {{1952, 1953}, {1955, 1958}},
+				},
+				[1] = {
+					.partname = "mils",
+					.parttime = {{1960, 1967}, {1977, 1983}},
+				},
+			},
+		};
+		phylife[0].physicalst5_querypp = inner_querypp;
+
+	}
+//6.0 思考使用宏函数来实现上面繁琐的赋值过程
 	return 0;
 }
