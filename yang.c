@@ -310,9 +310,9 @@ static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 						int i = 0, j = 0;
 
 						for (i = 0; i < len; i++) {
-								if ( (pcb->year >= (*(*(ptime +i) + 0)) ) && ( (pcb->year <= (*(*(ptime +i) + 1)))) ) {
-									printf("%d, %s  :%s\n", pcb->year, ppt->partname, pcb->invention);
-								}
+							if ( (pcb->year >= (*(*(ptime +i) + 0)) ) && ( (pcb->year <= (*(*(ptime +i) + 1)))) ) {
+								printf("%d, %s  :%s\n", pcb->year, ppt->partname, pcb->invention);
+							}
 						}
 					}
 				}
