@@ -551,6 +551,39 @@ int main()
 		};
 		char *p = 0;
 	}
+
+//5.1 结构体数组的初始化问题,比如数组第一个元素代表什么的问题。
+	{
+		struct phytest {
+			int a;
+			char *b;
+		};
+
+		struct phytest ptest[] = {
+			[0] = {
+				.a = 1,
+				.b = "phy test",
+			},
+			[1] = -0xff,
+		};
+
+		printf("-----编译通过-----\n");
+
+		struct phytest2 {
+			char *b;
+			int a;
+		};
+
+		struct phytest2 ptest2[] = {
+			[0] = {
+				.a = 1,
+				.b = "phy test2"
+			},
+			[1] = {NULL},
+		};
+		printf("-----编译通过-----\n");
+	}
+
 //6.0 思考使用宏函数来实现上面繁琐的赋值过程
 	return 0;
 }
