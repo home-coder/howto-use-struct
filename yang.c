@@ -284,7 +284,7 @@ static void print_everywife_name2(struct physicalst3 *yznlife)
 	int i = 0;
 
 	for (; *(yznlife->wife) != NULL; yznlife->wife++) {
-		printf("his %d wife name is %s\n", i++, (*(yznlife->wife))->name); //优先级问题,箭头   -> 和 []   是一个级别的属于一等优先
+		printf("his %d wife name is %s\n", i++, (*yznlife->wife)->name); //优先级问题,箭头   -> 和 []   是一个级别的属于一等优先
 	}
 	printf("-------------------------------------\n");
 }
@@ -599,7 +599,7 @@ int main()
 		};
 
 		struct phytest2 *ppt = ptest2;
-		for (; ppt->p != NULL; ppt++) {
+		for (; ppt->b != NULL; ppt++) {
 			printf("%s\n", ppt->b);
 		}
 	}
