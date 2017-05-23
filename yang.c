@@ -291,6 +291,12 @@ static void print_everywife_name2(struct physicalst3 *yznlife)
 
 static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 {
+	struct physicalst5 *pplife = phylife;
+
+	for (; pplife != NULL; pplife++) {
+		if (!strcmp(pplife->name, name)) {
+		}
+	}
 }
 
 int main()
@@ -525,6 +531,7 @@ int main()
 						.year = 1962,
 						.invention = "Yang 4st Old NB",
 					},
+					[4] = NULL,
 				},
 				.pners = {
 					[0] = {
