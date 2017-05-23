@@ -531,7 +531,7 @@ int main()
 						.year = 1962,
 						.invention = "Yang 4st Old NB",
 					},
-					[4] = NULL,
+					[4] = 0,
 				},
 				.pners = {
 					[0] = {
