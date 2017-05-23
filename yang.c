@@ -292,11 +292,24 @@ static void print_everywife_name2(struct physicalst3 *yznlife)
 static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 {
 	struct physicalst5 *pplife = phylife;
+	int from = region[0], end = region[1];
 
 	for (; pplife != NULL; pplife++) {
 		if (!strcmp(pplife->name, name)) {
+			struct contribution *pcb = pplife->cbution;	
+			for (; pcb->year != -0xff; pcb++) {
+				if ( (pcb->year >= from) && (pcb->year <= end) ) {
+					printf("debug: year(%d)--%d\n", pcb->year, __LINE__);
+					struct partner *ppt = pplife->pners;
+					for (; ppt->partname != NULL; ppt++) {
+						printf("partname %s\n", ppt->partname);	
+						int *ptime = ppt->parttime[0];
+					}
+				}
+			}
 		}
 	}
+	printf("-------------------------------------\n");
 }
 
 int main()
@@ -531,7 +544,7 @@ int main()
 						.year = 1962,
 						.invention = "Yang 4st Old NB",
 					},
-					[4] = 0,
+					[4] = -0xff,
 				},
 				.pners = {
 					[0] = {
@@ -542,6 +555,7 @@ int main()
 						.partname = "mils",
 						.parttime = {{1960, 1967}, {1977, 1983}},
 					},
+					[2] = NULL,
 				},
 
 				.query_invention_partname = inner_querypp,
@@ -550,6 +564,8 @@ int main()
 			[1] = NULL,
 		};
 		char *p = 0;
+		int region[] = {1957, 1958};
+		inner_querypp(phylife, "yangzhenning", region);
 	}
 
 //5.1 结构体数组的初始化问题,比如数组第一个元素代表什么的问题。
