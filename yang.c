@@ -299,11 +299,21 @@ static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 			struct contribution *pcb = pplife->cbution;	
 			for (; pcb->year != -0xff; pcb++) {
 				if ( (pcb->year >= from) && (pcb->year <= end) ) {
-					printf("debug: year(%d)--%d\n", pcb->year, __LINE__);
+					//printf("debug: year(%d)--%d\n", pcb->year, __LINE__);
 					struct partner *ppt = pplife->pners;
-					for (; ppt->partname != NULL; ppt++) {
-						printf("partname %s\n", ppt->partname);	
-						int *ptime = ppt->parttime[0];
+					for (; ppt->partname != NULL; ppt++) {//求取得论文之类贡献的时间点是在哪一个合作者时间段内
+						//printf("partname %s\n", ppt->partname);
+						//int *ptime = ppt->parttime[0];//用注释掉的方法会很麻烦，使用数组指针将问题处理的就会很漂亮，终于用上数组指针了
+						int (*ptime)[2] = ppt->parttime;
+						int len = sizeof(ppt->parttime)/sizeof(ppt->parttime[0]);
+						int regionlen = sizeof(ppt->parttime[0]);
+						int i = 0, j = 0;
+
+						for (i = 0; i < len; i++) {
+								if ( (pcb->year >= (*(*(ptime +i) + 0)) ) && ( (pcb->year <= (*(*(ptime +i) + 1)))) ) {
+									printf("%d, %s  :%s\n", pcb->year, ppt->partname, pcb->invention);
+								}
+						}
 					}
 				}
 			}
@@ -549,11 +559,11 @@ int main()
 				.pners = {
 					[0] = {
 						.partname = "Lizhengdao",
-						.parttime = {{1952, 1953}, {1955, 1958}},
+						.parttime = {{1952, 1953}, {1955, 1958}, {-0xff}},
 					},
 					[1] = {
 						.partname = "mils",
-						.parttime = {{1960, 1967}, {1977, 1983}},
+						.parttime = {{1960, 1967}, {1977, 1983}, {-0xff}},
 					},
 					[2] = NULL,
 				},
@@ -564,7 +574,7 @@ int main()
 			[1] = NULL,
 		};
 		char *p = 0;
-		int region[] = {1952, 1958};
+		int region[] = {1952, 1999};
 		inner_querypp(phylife, "yangzhenning", region);
 	}
 
