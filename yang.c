@@ -583,7 +583,26 @@ int main()
 		};
 		printf("-----编译通过-----\n");
 	}
+//5.2 结构体默认初始值问题,如果以5.1的test2为例就要判断是否为空。
+	{
+		struct phytest2 {
+			char *b;
+			int a;
+		};
 
+		struct phytest2 ptest2[] = {
+			[0] = {
+				.a = 1,
+				.b = "no null",
+			},
+			[1] = NULL,
+		};
+
+		struct phytest2 *ppt = ptest2;
+		for (; ppt != NULL; ppt++) {
+			printf("%s\n", ppt->b);
+		}
+	}
 //6.0 思考使用宏函数来实现上面繁琐的赋值过程
 	return 0;
 }
