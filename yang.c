@@ -599,7 +599,7 @@ int main()
 		};
 
 		struct phytest2 *ppt = ptest2;
-		for (; ppt != NULL; ppt++) {
+		for (; ppt->p != NULL; ppt++) {
 			printf("%s\n", ppt->b);
 		}
 	}
