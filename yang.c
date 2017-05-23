@@ -529,10 +529,9 @@ int main()
 		print_everywife_name2(yznlife);
 	}
 
-//5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果和合作者，不要考虑时间重合多个合作者，那是下一步的事情
-      //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
-	  //使用链表或者什么将所有物理家的共性连到一起,下一步的事情
-
+//5.0 设计结构体，yangzhenning, mils, newton, feiman, albert . 随便输入一个科学家的名字yangzhenning 时间段(1906, 1933),输出这个期间的获取诺贝尔的物理家的成果和合作者，
+				//不要考虑时间重合多个合作者，那是下一步的事情
+			   //这个********************************值得再次训练
 	{
 		struct physicalst5 phylife[5] = {
 			[0] = {
@@ -577,6 +576,10 @@ int main()
 		int region[] = {1952, 1999};
 		inner_querypp(phylife, "yangzhenning", region);
 	}
+
+//5.0.1
+      //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
+	  //使用链表或者什么将所有物理家的共性连到一起,下一步的事情
 
 //5.1 结构体数组的初始化问题,比如数组第一个元素代表什么的问题。
 	{
