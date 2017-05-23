@@ -294,7 +294,7 @@ static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 	struct physicalst5 *pplife = phylife;
 	int from = region[0], end = region[1];
 
-	for (; pplife != NULL; pplife++) {
+	for (; pplife->name != NULL; pplife++) {
 		if (!strcmp(pplife->name, name)) {
 			struct contribution *pcb = pplife->cbution;	
 			for (; pcb->year != -0xff; pcb++) {
@@ -564,7 +564,7 @@ int main()
 			[1] = NULL,
 		};
 		char *p = 0;
-		int region[] = {1957, 1958};
+		int region[] = {1952, 1958};
 		inner_querypp(phylife, "yangzhenning", region);
 	}
 
