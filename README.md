@@ -26,6 +26,9 @@ http://blog.csdn.net/yang_yulei/article/details/23395315
 3.运算符的优先级，尤其是前两组优先级的
 http://www.slyar.com/blog/c-operator-priority.html
 
+4.内核结构体链表
+http://blog.csdn.net/huangshanchun/article/details/41146283
+
 ---------------------------------------------------------------------------------------------
 1.简单结构体（初始化一个包含char, int, char \*, char [x], int[][], char \*[], \）的不同场景的使用，如使用指针，如取得内部数据，如通过内部获取整体container of; 结构体内存的copy；
 
@@ -143,5 +146,5 @@ char * str[] = {"hello", "world", NULL};这句话背后的意思是，hello worl
 
 
 
-
+----------------------------------------------------------------------------------------------------
 
