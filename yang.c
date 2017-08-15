@@ -55,6 +55,13 @@ struct physicalst5 {
 	void (*query_invention_partname)(struct physicalst5 *, char *, int *); //yangzhenning, {1956, 1962}
 };
 
+struct physicalst6 {
+	char *name;
+	struct contribution *cbution; //最多五个贡献
+	struct partner *pners; //最多三个合作者
+	void (*query_invention_partname)(struct physicalst6 *, char *, int *); //yangzhenning, {1956, 1962}
+};
+
 static void print_yang(struct yangst yznlife, int (*ppt)[10])
 {
 	int bylen = sizeof(yznlife.big_year)/sizeof(yznlife.big_year[0]);
@@ -322,6 +329,11 @@ static void inner_querypp(struct physicalst5 *phylife, char *name, int *region)
 	printf("-------------------------------------\n");
 }
 
+static void inner_query_all(struct physicalst6 *pst, char *name, int *region)
+{
+
+}
+
 int main()
 {
 //1.0 声明时初始化结构体，不包含赋值操作
@@ -577,6 +589,49 @@ int main()
 		inner_querypp(phylife, "yangzhenning", region);
 	}
 
+//5.0.0  5.0 问题 again
+	{
+		struct contribution innercb[5] = {
+			[0] = {
+				.year = 1952,
+				.invention = "1952 get newer",
+			},
+			[1] = {
+				.year = 1957,
+				.invention = "1957 get newer",
+			},
+			[2] = {
+				.year = 1963,
+				.invention = "1963 get newer",
+			},
+			[3] = -0xff,
+		};
+
+		struct partner innerpt[3] = {
+			[0] = {
+				.partname = "mils",
+				.parttime = {{1951, 1955}, {1965, 1977}},
+			},
+			[1] = {
+				.partname = "lizhengdao",
+				.parttime = {{1954, 1962}, {1973, 1988}},
+			},
+			[2] = NULL,
+		};
+
+		struct physicalst6 innerp5[3] = {
+			[0] = {
+				.name = "yangzhenning",
+				.cbution = innercb,
+				.pners = innerpt,
+				.query_invention_partname = inner_query_all,
+			},
+			[1] = NULL,
+		};
+		char *p = 0;
+		int region[] = {1952, 1999};
+	}
+
 //5.0.1
       //不要把结构体设计成成果和你年限放到一体，比如{"yangzhenning", {1953, 2003}, "yang-mils function", "yang-lizhegdao function"}
 	  //使用链表或者什么将所有物理家的共性连到一起,下一步的事情
@@ -633,5 +688,12 @@ int main()
 		}
 	}
 //6.0 思考使用宏函数来实现上面繁琐的赋值过程
+
+
+//7.0 memcpy在结构体中的使用
+
+//8.0 结构体和枚举的综合应用，就像gpio的例子
+
+//9.0 结构体
 	return 0;
 }
