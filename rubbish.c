@@ -44,3 +44,37 @@ static struct platform_device keyadc_device = {
 		.platform_data = &keyadc_pdata,  
 	}         
 };  
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct MyStruct
+{
+	int a;
+	int b;
+	char* c;
+};
+
+int main()
+{
+	struct MyStruct t1;
+	t1.a = 1;
+	t1.b = 2;
+	// 为指针区域赋值
+	char *p = (char*)malloc(10*sizeof(char));
+	strcpy(p, "hello");
+	t1.c = p;
+
+	struct MyStruct t2;
+	t2 = t1;
+	printf("MyStruct t1: %d, %d, %s\n", t1.a, t1.b, t1.c);
+	// 释放了t1的内存
+	//free(p);
+	printf("MyStruct t2: %d, %d, %s\n", t2.a, t2.b, t2.c);
+
+
+	printf("t1 pointer addr: %p\n", t1.c);
+	printf("t2 pointer addr: %p\n", t2.c);
+
+	return 0;
+}
