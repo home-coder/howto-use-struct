@@ -143,5 +143,21 @@ char * str[] = {"hello", "world", NULL};这句话背后的意思是，hello worl
 
 
 
+==============================
+TODO
+--------
+这是一个从h2的内核中找到的，需要测试一下这个结构
+1155 static int (* const fetch_sysconfig_para[])(enum input_sensor_type *input_type) = {
+1156     ctp_fetch_sysconfig_para,
+1157     gsensor_fetch_sysconfig_para,
+1158     gyr_fetch_sysconfig_para,
+1159     e_compass_fetch_sysconfig_para,
+1160     ls_fetch_sysconfig_para,
+1161     ir_fetch_sysconfig_para,
+1162     ths_fetch_sysconfig_para,
+1163     motor_fetch_sysconfig_para,
+1164     bat_fetch_sysconfig_para
+1165 };
+
 
 
